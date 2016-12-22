@@ -21,29 +21,29 @@ class Updator :
         if(tableName=="User"):
             print('inserting')
             insertionData = ("INSERT INTO " + tableName +
-                   "(username, name, family, password)"
-                   "VALUES (%s, %s, %s, %s)")
+                   "(username, name, family, password , account)"
+                   "VALUES (%s, %s, %s, %s ,%s)")
         elif(tableName=="Product"):
             insertionData = ("INSERT INTO " + tableName +
                    "(productCode, productType, price, stock)"
                    "VALUES (%s, %s, %s, %s)")
         elif(tableName=="GasSensor"):
             insertionData = ("INSERT INTO " + tableName +
-                   "(productID , username , productCode , time , CO2 , CO , CH4)"
-                   "VALUES (%s, %s, %s, %s , %s , %s , %s)")
+                   "(username , productCode , time , CO2 , CO , CH4)"
+                   "VALUES ( %s, %s, %s , %s , %s , %s)")
         elif(tableName=="TempSensor"):
             print("inserting")
             insertionData = ("INSERT INTO " + tableName +
-                   " (productID , username , productCode , time , temperature)"
-                   "VALUES (%s, %s , %s , %s , %s)")
+                   " ( username , productCode , time , temperature)"
+                   "VALUES (%s , %s , %s , %s)")
         elif(tableName=="HumiditySensor"):
             insertionData = ("INSERT INTO " + tableName +
-                   "(productID , username , productCode , time , aurHumidity , soilHumidity)"
-                   "VALUES (%s, %s, %s, %s , %s , %s)")
+                   "(username , productCode , time , airHumidity , soilHumidity)"
+                   "VALUES (%s, %s, %s , %s , %s)")
         elif(tableName=="LightSensor"):
             insertionData = ("INSERT INTO " + tableName +
-                   "(productID , username , productCode , time , lightIntensity , bLightIntensity)"
-                   "VALUES (%s, %s, %s, %s , %s , %s)")
+                   "(username , productCode , time , lightIntensity , bLightIntensity)"
+                   "VALUES (%s, %s, %s , %s , %s)")
         else:
             print("TableName is unknown!")
         self.cursor.execute(insertionData, tableData)
@@ -129,6 +129,7 @@ class Updator :
     def sellDevices(self,username,product):
         if (self.getStock(product)):
             self.decStock(product)
+            self.updateAccount(username,self.getPrice(product))
             self.insertRaw(username,product)
         else:
             print("we're out of " + product)
@@ -154,3 +155,33 @@ class Updator :
         print(devices[1])
         print(devices[2])
         print(devices[3])
+
+
+
+    def getPrice(self,product):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT price FROM Product WHERE productType= %s""" , (product,))
+        priceTuple = (self.cursor.fetchall()[0])
+        self.cursor.close()
+        self.cnx.close()
+        return (priceTuple[0])
+
+
+    def updateAccount(self,username,amount):
+        change = int(self.getAccount(username)) + amount
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""UPDATE User SET account=%s WHERE username= %s""" , (change , username))
+        self.cnx.commit()
+        self.cursor.close()
+        self.cnx.close()
+
+    def getAccount(self,username):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT account FROM User WHERE username= %s""" , (username,))
+        accountTuple = (self.cursor.fetchall()[0])
+        self.cursor.close()
+        self.cnx.close()
+        return (accountTuple[0])

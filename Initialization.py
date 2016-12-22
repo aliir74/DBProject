@@ -1,5 +1,6 @@
 import mysql.connector
 import MainUpdator
+import Utilities
 from mysql.connector import errorcode
 
 user = 'testuser'
@@ -42,6 +43,7 @@ def create(DB_NAME , PORT) :
         "  `name` varchar(20),"
         "  `family` varchar(20),"
         "  `password` varchar(20),"
+        "  `account` int(20),"
         "  PRIMARY KEY (`username`)"
         ") ENGINE=InnoDB")
 
@@ -138,3 +140,30 @@ def create(DB_NAME , PORT) :
     u.insert("Product" , ("2" , "TempSensor" , "1000" , "0"))
     u.insert("Product" , ("3" , "HumiditySensor" , "1000" , "0"))
     u.insert("Product" , ("4" , "LightSensor" , "500" , "0"))
+
+    u.insert("User" , ("mxii1994" , "Mehdi" , "Safaee" , "mono1728" , "0"))
+    u.insert("User" , ("ali94" , "Ali" , "Irani" , "ali0241" , "0"))
+    u.insert("User" , ("HN93" , "Hossein" , "Nazari" , "hn93" , "0"))
+    u.insert("User" , ("MRTZSLAV1993" , "MohammadReza" , "Mortezavi" , "mrtzslav1993" , "0"))
+    u.insert("User" , ("Marya94" , "Maryam" , "Farahani" , "m1994" , "0"))
+
+    u.setStock("GasSensor" , "20")
+    u.setStock("TempSensor" , "20")
+    u.setStock("HumiditySensor" , "20")
+    u.setStock("LightSensor" , "20")
+
+    u.insert("GasSensor" , ("MRTZSLAV1993" , "1" , Utilities.getFormattedDate() , "20" , "20" , "20"))
+    u.insert("GasSensor" , ("MRTZSLAV1993" , "1" , Utilities.getFormattedDate() , "25" , "25" , "25"))
+    u.insert("TempSensor" , ("mxii1994" , "2" , Utilities.getFormattedDate() , "30"))
+    u.insert("HumiditySensor" , ("mxii1994" , "3" , Utilities.getFormattedDate() , "60" , "60"))
+    u.insert("LightSensor" , ("mxii1994" , "4" , Utilities.getFormattedDate() , "5" , "5"))
+    u.insert("LightSensor" , ("mxii1994" , "4" , Utilities.getFormattedDate() , "10" , "10"))
+
+    u.sellDevices("mxii1994" , "TempSensor")
+    u.sellDevices("mxii1994" , "TempSensor")
+    u.sellDevices("mxii1994" , "TempSensor")
+    u.sellDevices("mxii1994" , "LightSensor")
+    u.sellDevices("Marya94" , "LightSensor")
+    u.sellDevices("Marya94" , "LightSensor")
+    u.sellDevices("MRTZSLAV1993" , "GasSensor")
+    u.sellDevices("MRTZSLAV1993" , "GasSensor")
