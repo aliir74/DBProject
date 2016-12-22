@@ -2,11 +2,12 @@ import mysql.connector
 import MainUpdator
 from mysql.connector import errorcode
 
-
+user = 'testuser'
+password = 'test123test!'
 
 def create(DB_NAME , PORT) :
 
-    cnx = mysql.connector.connect(user='mxii1994' , password='mono1728' , host='localhost' , port=PORT)
+    cnx = mysql.connector.connect(user=user , password=password , host='localhost' , port=PORT)
     cursor = cnx.cursor()
 
 
@@ -114,7 +115,7 @@ def create(DB_NAME , PORT) :
 
 
 
-    for i, ddl in TABLES.iteritems():
+    for i, ddl in TABLES.items():
         try:
             print("Creating table {}: ".format(i))
             cursor.execute(ddl)
@@ -130,7 +131,7 @@ def create(DB_NAME , PORT) :
     cnx.close()
 
 
-    u = MainUpdator.Updator('mxii1994','mono1728','localhost',DB_NAME,PORT)
+    u = MainUpdator.Updator(user,password,'localhost',DB_NAME,PORT)
     u.insert("Product" , ("0" , "actuator" , "2500" , "0"))
     u.insert("Product" , ("1" , "gasSensor" , "1500" , "0"))
     u.insert("Product" , ("2" , "temperatureSensor" , "1000" , "0"))

@@ -110,7 +110,7 @@ class Updator :
         return (devices)
 
 
-
+'''
     def sellDevices(self,product,username):
         if (self.getStock(product)):
 
@@ -118,7 +118,7 @@ class Updator :
             self.cnx.commit()
 
 
-
+'''
 
 
 
