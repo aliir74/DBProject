@@ -11,7 +11,7 @@ class Updator :
         self.DB_NAME = DB_NAME
         self.PORT = PORT
 
-print("test")
+
 
 
 
