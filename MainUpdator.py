@@ -14,6 +14,8 @@ class Updator :
 
 
 
+
+
     def insert(self, tableName , tableData):
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
@@ -48,6 +50,7 @@ class Updator :
         self.cursor.execute(insertionData, tableData)
         self.cnx.commit()
 
+
         self.cursor.close()
         self.cnx.close()
 
@@ -55,7 +58,8 @@ class Updator :
     def incStock(self, product):
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
-        self.cursor.execute("UPDATE Product SET stock=stock+1 WHERE productType=" +product)
+        self.cursor.execute("UPDATE Product SET stock=stock+1 WHERE productType=\'"+product+"'")
+
         self.cnx.commit()
         self.cursor.close()
         self.cnx.close()
@@ -64,7 +68,7 @@ class Updator :
         if (self.getStock(product)):
             self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
             self.cursor = self.cnx.cursor()
-            self.cursor.execute("UPDATE Product SET stock=stock-1  WHERE stock>0 and productType=" +product)
+            self.cursor.execute("UPDATE Product SET stock=stock-1 WHERE productType=\'"+product+"'")
             self.cnx.commit()
         self.cursor.close()
         self.cnx.close()
@@ -72,7 +76,7 @@ class Updator :
     def getStock(self,product):
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
-        self.cursor.execute("SELECT stock FROM Product WHERE productType=" +product)
+        self.cursor.execute("SELECT stock FROM Product WHERE productType=\'" +product+"'")
         stockTuple = (self.cursor.fetchall()[0])
         self.cursor.close()
         self.cnx.close()
