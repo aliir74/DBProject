@@ -75,8 +75,7 @@ class Updator :
     def incStock(self, product):
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
-        self.cursor.execute("UPDATE Product SET stock=stock+1 WHERE productType=\'"+product+"'")
-
+        self.cursor.execute("""UPDATE Product SET stock=stock+1 WHERE productType= %s""" , (product,))
         self.cnx.commit()
         self.cursor.close()
         self.cnx.close()
@@ -85,7 +84,7 @@ class Updator :
         if (self.getStock(product)):
             self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
             self.cursor = self.cnx.cursor()
-            self.cursor.execute("UPDATE Product SET stock=stock-1 WHERE productType=\'"+product+"'")
+            self.cursor.execute("""UPDATE Product SET stock=stock-1 WHERE productType=%s""" , (product,))
             self.cnx.commit()
         self.cursor.close()
         self.cnx.close()
@@ -93,23 +92,32 @@ class Updator :
     def getStock(self,product):
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
-        self.cursor.execute("SELECT stock FROM Product WHERE productType=\'" +product+"'")
+        self.cursor.execute("""SELECT stock FROM Product WHERE productType= %s""" , (product,))
         stockTuple = (self.cursor.fetchall()[0])
         self.cursor.close()
         self.cnx.close()
         return (stockTuple[0])
 
 
+    def setStock(self,product,amount):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""UPDATE Product SET stock = %s WHERE productType= %s""" , (amount , product))
+        self.cnx.commit()
+        self.cursor.close()
+        self.cnx.close()
+
+
     def getDevices(self,username):
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
-        self.cursor.execute("SELECT * FROM gasSensor WHERE username=" +username)
+        self.cursor.execute("""SELECT * FROM GasSensor WHERE username=""" ,(username,))
         gasSensors = (self.cursor.fetchall())
-        self.cursor.execute("SELECT * FROM tempSensor WHERE username=" +username)
+        self.cursor.execute("""SELECT * FROM TempSensor WHERE username=""" ,(username,))
         tempSensors = (self.cursor.fetchall())
-        self.cursor.execute("SELECT * FROM humiditySensor WHERE username=" +username)
+        self.cursor.execute("""SELECT * FROM HumiditySensor WHERE username=""" ,(username,))
         humiditySensors = (self.cursor.fetchall())
-        self.cursor.execute("SELECT * FROM lightSensor WHERE username=" +username)
+        self.cursor.execute("""SELECT * FROM LightSensor WHERE username=""" ,(username,))
         lightSensors = (self.cursor.fetchall())
         self.cursor.close()
         self.cnx.close()
@@ -132,7 +140,7 @@ class Updator :
     def getProductCode(self,product):
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
-        self.cursor.execute("SELECT productCode FROM Product WHERE productType=\'" +product+"'")
+        self.cursor.execute("""SELECT productCode FROM Product WHERE productType=%s""" , (product,))
         productCodeTuple = (self.cursor.fetchall()[0])
         self.cursor.close()
         self.cnx.close()
