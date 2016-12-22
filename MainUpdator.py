@@ -1,4 +1,5 @@
 import mysql.connector
+import datetime
 from mysql.connector import errorcode
 
 
@@ -53,6 +54,24 @@ class Updator :
         self.cnx.close()
 
 
+
+    def insertRaw(self, username , product):
+        insertionData = ("INSERT INTO " + product +
+                   "(username , productCode , time)"
+                   "VALUES (%s ,%s ,%s)")
+        tableData = (username,self.getProductCode(product),datetime.datetime.now())
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute(insertionData, tableData)
+        self.cnx.commit()
+        self.cursor.close()
+        self.cnx.close()
+
+
+
+
+
+
     def incStock(self, product):
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
@@ -98,12 +117,23 @@ class Updator :
         return (devices)
 
 
-'''
-    def sellDevices(self,product,username):
+
+    def sellDevices(self,username,product):
         if (self.getStock(product)):
+            self.decStock(product)
+            self.insertRaw(username,product)
+        else:
+            print("we're out of " + product)
 
-            self.cursor.execute(insertionData, tableData)
-            self.cnx.commit()
 
 
-'''
+
+
+    def getProductCode(self,product):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("SELECT productCode FROM Product WHERE productType=\'" +product+"'")
+        productCodeTuple = (self.cursor.fetchall()[0])
+        self.cursor.close()
+        self.cnx.close()
+        return (productCodeTuple[0])

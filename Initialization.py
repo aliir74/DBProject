@@ -32,7 +32,6 @@ def create(DB_NAME , PORT) :
             exit(1)
 
 
-print("shiiiit")
 
 
 
@@ -57,7 +56,7 @@ print("shiiiit")
 
     TABLES[2] = (
         "CREATE TABLE `TempSensor` ("
-        "  `productID` varchar(20),"
+        "  `productID` int(10) AUTO_INCREMENT,"
         "  `username` varchar(20),"
         "  `productCode` int(10),"
         "  `temperature` int(10),"
@@ -70,7 +69,7 @@ print("shiiiit")
 
     TABLES[3] = (
         "CREATE TABLE `LightSensor` ("
-        "  `productID` varchar(20),"
+        "  `productID` int(10) AUTO_INCREMENT ,"
         "  `username` varchar(20),"
         "  `productCode` int(10),"
         "  `time` date,"
@@ -85,7 +84,7 @@ print("shiiiit")
 
     TABLES[4] = (
         "  CREATE TABLE `HumiditySensor` ("
-        "  `productID` varchar(20),"
+        "  `productID` int(10) AUTO_INCREMENT ,"
         "  `username` varchar(20),"
         "  `productCode` int(10),"
         "  `time` date,"
@@ -100,7 +99,7 @@ print("shiiiit")
 
     TABLES[5] = (
         "  CREATE TABLE `GasSensor` ("
-        "  `productID` varchar(20),"
+        "  `productID` int(10) AUTO_INCREMENT ,"
         "  `username` varchar(20)  ,"
         "  `productCode` int(10),"
         "  `time` date,"
@@ -133,8 +132,8 @@ print("shiiiit")
 
 
     u = MainUpdator.Updator(user,password,'localhost',DB_NAME,PORT)
-    u.insert("Product" , ("0" , "actuator" , "2500" , "0"))
-    u.insert("Product" , ("1" , "gasSensor" , "1500" , "0"))
-    u.insert("Product" , ("2" , "temperatureSensor" , "1000" , "0"))
-    u.insert("Product" , ("3" , "humiditySensor" , "1000" , "0"))
-    u.insert("Product" , ("4" , "lightSensor" , "500" , "0"))
+    u.insert("Product" , ("0" , "Actuator" , "2500" , "0"))
+    u.insert("Product" , ("1" , "GasSensor" , "1500" , "0"))
+    u.insert("Product" , ("2" , "TempSensor" , "1000" , "0"))
+    u.insert("Product" , ("3" , "HumiditySensor" , "1000" , "0"))
+    u.insert("Product" , ("4" , "LightSensor" , "500" , "0"))
