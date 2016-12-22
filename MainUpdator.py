@@ -22,46 +22,34 @@ class Updator :
             insertionData = ("INSERT INTO " + tableName +
                    "(username, name, family, password)"
                    "VALUES (%s, %s, %s, %s)")
-            self.cursor.execute(insertionData, tableData)
-            self.cnx.commit()
-        if(tableName=="Product"):
+        elif(tableName=="Product"):
             insertionData = ("INSERT INTO " + tableName +
                    "(productCode, productType, price, stock)"
                    "VALUES (%s, %s, %s, %s)")
-            self.cursor.execute(insertionData, tableData)
-            self.cnx.commit()
-        if(tableName=="GasSensor"):
+        elif(tableName=="GasSensor"):
             insertionData = ("INSERT INTO " + tableName +
                    "(productID , username , productCode , time , CO2 , CO , CH4)"
                    "VALUES (%s, %s, %s, %s , %s , %s , %s)")
-            self.cursor.execute(insertionData, tableData)
-            self.cnx.commit()
-        if(tableName=="TempSensor"):
+        elif(tableName=="TempSensor"):
             print("inserting")
             insertionData = ("INSERT INTO " + tableName +
                    " (productID , username , productCode , time , temperature)"
                    "VALUES (%s, %s , %s , %s , %s)")
-            self.cursor.execute(insertionData, tableData)
-            self.cnx.commit()
-        if(tableName=="HumiditySensor"):
+        elif(tableName=="HumiditySensor"):
             insertionData = ("INSERT INTO " + tableName +
                    "(productID , username , productCode , time , aurHumidity , soilHumidity)"
                    "VALUES (%s, %s, %s, %s , %s , %s)")
-            self.cursor.execute(insertionData, tableData)
-            self.cnx.commit()
-        if(tableName=="LightSensor"):
+        elif(tableName=="LightSensor"):
             insertionData = ("INSERT INTO " + tableName +
                    "(productID , username , productCode , time , lightIntensity , bLightIntensity)"
                    "VALUES (%s, %s, %s, %s , %s , %s)")
-            self.cursor.execute(insertionData, tableData)
-            self.cnx.commit()
+        else:
+            print("TableName is unknown!")
+        self.cursor.execute(insertionData, tableData)
+        self.cnx.commit()
 
         self.cursor.close()
         self.cnx.close()
-        return ()
-
-
-
 
 
     def incStock(self, product):
@@ -71,7 +59,6 @@ class Updator :
         self.cnx.commit()
         self.cursor.close()
         self.cnx.close()
-        return ()
 
     def decStock(self, product):
         if (self.getStock(product)):
@@ -81,7 +68,6 @@ class Updator :
             self.cnx.commit()
         self.cursor.close()
         self.cnx.close()
-        return ()
 
     def getStock(self,product):
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )

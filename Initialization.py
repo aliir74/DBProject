@@ -137,4 +137,3 @@ def create(DB_NAME , PORT) :
     u.insert("Product" , ("2" , "temperatureSensor" , "1000" , "0"))
     u.insert("Product" , ("3" , "humiditySensor" , "1000" , "0"))
     u.insert("Product" , ("4" , "lightSensor" , "500" , "0"))
-    return ()
