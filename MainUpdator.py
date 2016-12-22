@@ -1,6 +1,6 @@
 import mysql.connector
-import datetime as t
-from mysql.connector import errorcode
+import Utilities
+
 
 
 class Updator :
@@ -59,15 +59,7 @@ class Updator :
         insertionData = ("INSERT INTO " + product +
                    "(username , productCode , time)"
                    "VALUES (%s ,%s ,%s)")
-
-        formattedDate = ("" + str(t.datetime.now().year) + "-"
-                           + str(t.datetime.now().month) + "_"
-                           + str(t.datetime.now().day) + " "
-                           + str(t.datetime.now().hour) + ":"
-                           + str(t.datetime.now().minute) + ":"
-                           + str(t.datetime.now().second) +"" )
-
-        tableData = (username,self.getProductCode(product),formattedDate)
+        tableData = (username,self.getProductCode(product),Utilities.getFormattedDate())
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
         self.cursor.execute(insertionData, tableData)
