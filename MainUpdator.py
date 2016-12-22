@@ -1,5 +1,5 @@
 import mysql.connector
-import datetime
+import datetime as t
 from mysql.connector import errorcode
 
 
@@ -59,7 +59,15 @@ class Updator :
         insertionData = ("INSERT INTO " + product +
                    "(username , productCode , time)"
                    "VALUES (%s ,%s ,%s)")
-        tableData = (username,self.getProductCode(product),datetime.datetime.now())
+
+        formattedDate = ("" + str(t.datetime.now().year) + "-"
+                           + str(t.datetime.now().month) + "_"
+                           + str(t.datetime.now().day) + " "
+                           + str(t.datetime.now().hour) + ":"
+                           + str(t.datetime.now().minute) + ":"
+                           + str(t.datetime.now().second) +"" )
+
+        tableData = (username,self.getProductCode(product),formattedDate)
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
         self.cursor.execute(insertionData, tableData)
@@ -111,13 +119,13 @@ class Updator :
     def getDevices(self,username):
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
-        self.cursor.execute("""SELECT * FROM GasSensor WHERE username=""" ,(username,))
+        self.cursor.execute("""SELECT * FROM GasSensor WHERE username=%s""" ,(username,))
         gasSensors = (self.cursor.fetchall())
-        self.cursor.execute("""SELECT * FROM TempSensor WHERE username=""" ,(username,))
+        self.cursor.execute("""SELECT * FROM TempSensor WHERE username=%s""" ,(username,))
         tempSensors = (self.cursor.fetchall())
-        self.cursor.execute("""SELECT * FROM HumiditySensor WHERE username=""" ,(username,))
+        self.cursor.execute("""SELECT * FROM HumiditySensor WHERE username=%s""" ,(username,))
         humiditySensors = (self.cursor.fetchall())
-        self.cursor.execute("""SELECT * FROM LightSensor WHERE username=""" ,(username,))
+        self.cursor.execute("""SELECT * FROM LightSensor WHERE username=%s""" ,(username,))
         lightSensors = (self.cursor.fetchall())
         self.cursor.close()
         self.cnx.close()
@@ -145,3 +153,12 @@ class Updator :
         self.cursor.close()
         self.cnx.close()
         return (productCodeTuple[0])
+
+
+
+    def getSensorData(self,username,):
+        devices = self.getDevices(username)
+        print(devices[0])
+        print(devices[1])
+        print(devices[2])
+        print(devices[3])

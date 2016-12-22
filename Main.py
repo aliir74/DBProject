@@ -8,7 +8,7 @@ user = 'testuser'
 password = 'test123test!'
 
 
-DB_NAME = "Test125"
+DB_NAME = "Test136"
 PORT = "3306"
 Initialization.create(DB_NAME , PORT)
 
@@ -21,6 +21,8 @@ u.incStock("GasSensor")
 u.decStock("GasSensor")
 u.sellDevices("mxii1994" , "GasSensor")
 u.setStock("TempSensor" , "50")
+u.sellDevices("mxii1994" , "TempSensor")
+u.getSensorData("mxii1994")
 
 
 print ("heh")
