@@ -11,9 +11,7 @@ class Updator :
         self.DB_NAME = DB_NAME
         self.PORT = PORT
 
-
-
-
+print("heeeeey")
 
 
     def insert(self, tableName , tableData):
@@ -109,10 +107,3 @@ class Updator :
 
 
 '''
-
-
-
-
-
-
-
