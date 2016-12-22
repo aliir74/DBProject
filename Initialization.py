@@ -32,6 +32,7 @@ def create(DB_NAME , PORT) :
             exit(1)
 
 
+print("shiiiit")
 
 
 
