@@ -19,7 +19,6 @@ class Updator :
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
         if(tableName=="User"):
-            print('inserting')
             insertionData = ("INSERT INTO " + tableName +
                    "(username, name, family, password , account)"
                    "VALUES (%s, %s, %s, %s ,%s)")
@@ -32,7 +31,6 @@ class Updator :
                    "(username , productCode , time , CO2 , CO , CH4)"
                    "VALUES ( %s, %s, %s , %s , %s , %s)")
         elif(tableName=="TempSensor"):
-            print("inserting")
             insertionData = ("INSERT INTO " + tableName +
                    " ( username , productCode , time , temperature)"
                    "VALUES (%s , %s , %s , %s)")
