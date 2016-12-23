@@ -1,16 +1,16 @@
 import mysql.connector
 import Utilities
-
+from Utilities import getInformation as info
 
 
 class Updator :
 
-    def __init__(self, username , password , host  , DB_NAME , PORT):
-        self.username = username
-        self.password = password
-        self.host = host
-        self.DB_NAME = DB_NAME
-        self.PORT = PORT
+    def __init__(self):
+        self.username = info.getUser(info)
+        self.password = info.getPassword(info)
+        self.host = info.getHost(info)
+        self.DB_NAME = info.getDB(info)
+        self.PORT = info.getPort(info)
 
 
 

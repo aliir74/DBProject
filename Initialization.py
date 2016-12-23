@@ -134,7 +134,7 @@ def create(DB_NAME , PORT) :
     cnx.close()
 
 
-    u = MainUpdator.Updator(user,password,'localhost',DB_NAME,PORT)
+    u = MainUpdator.Updator()
     u.insert("Product" , ("0" , "Actuator" , "2500" , "0"))
     u.insert("Product" , ("1" , "GasSensor" , "1500" , "0"))
     u.insert("Product" , ("2" , "TempSensor" , "1000" , "0"))

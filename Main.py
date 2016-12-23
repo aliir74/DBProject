@@ -1,20 +1,15 @@
 import mysql.connector
 import Initialization
 import MainUpdator
+import GUI
+from Utilities import getInformation as info
 
 
 
-user = 'testuser'
-password = 'test123test!'
+Initialization.create(info.getDB(info),info.getPort(info))
 
 
-DB_NAME = "Test152"
-PORT = "3306"
-Initialization.create(DB_NAME , PORT)
-
-
-u = MainUpdator.Updator(username=user, password=password, host='localhost', DB_NAME=DB_NAME, PORT=PORT)
-
+GUI.window()
 
 
 print ("heh")
