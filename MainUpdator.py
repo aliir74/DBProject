@@ -199,3 +199,13 @@ class Updator :
         self.cursor.close()
         self.cnx.close()
         return (accountTuple[0])
+
+
+
+    def setPrice(self,product,amount):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""UPDATE Product SET price = %s WHERE productType= %s""" , (amount,product))
+        self.cnx.commit()
+        self.cursor.close()
+        self.cnx.close()

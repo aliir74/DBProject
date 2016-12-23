@@ -129,7 +129,22 @@ opt4.setFixedSize(175,45)
 
 
 
-
+setPrice1 = QPushButton("Prc", window)
+setPrice1.move(240, 15)
+setPrice1.setAccessibleName("GasSensor")
+setPrice1.setFixedSize(30,20)
+setPrice2 = QPushButton("Prc", window)
+setPrice2.move(240, 35)
+setPrice2.setAccessibleName("TempSensor")
+setPrice2.setFixedSize(30,20)
+setPrice3 = QPushButton("Prc", window)
+setPrice3.move(240, 55)
+setPrice3.setAccessibleName("HumiditySensor")
+setPrice3.setFixedSize(30,20)
+setPrice4 = QPushButton("Prc", window)
+setPrice4.move(240, 75)
+setPrice4.setAccessibleName("LightSensor")
+setPrice4.setFixedSize(30,20)
 
 
 
@@ -265,8 +280,19 @@ opt4.clicked.connect(optClicked4)
 
 
 
+def optClicked5():
+   text = getText("update Price" , "Enter new price for this item : ")
+   u.setPrice(window.sender().accessibleName(),text)
 
 
+
+
+
+
+setPrice1.clicked.connect(optClicked5)
+setPrice2.clicked.connect(optClicked5)
+setPrice3.clicked.connect(optClicked5)
+setPrice4.clicked.connect(optClicked5)
 
 
 
