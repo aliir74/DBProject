@@ -74,11 +74,13 @@ class Updator :
         userTuple = (self.cursor.fetchall())
         self.cursor.close()
         self.cnx.close()
-        if userTuple == username :
-            return (1)
+        if(userTuple):
+            if userTuple[0][0] == username :
+                return (1)
+            else :
+                return(0)
         else :
             return(0)
-
 
 
 

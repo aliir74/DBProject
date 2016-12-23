@@ -1,6 +1,6 @@
 import sys
 import time
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication , QLabel , QWidget , QInputDialog
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication , QLabel , QWidget , QInputDialog , QMessageBox , QLineEdit
 import MainUpdator
 from Utilities import getInformation as info
 
@@ -14,7 +14,6 @@ u = MainUpdator.Updator()
 
 
 app = QApplication(sys.argv)
-getInput = QInputDialog
 window = QMainWindow()
 window.setFixedSize(350,180)
 window.setWindowTitle('IOT Shop')
@@ -213,6 +212,68 @@ set4.clicked.connect(buttonClicked3)
 
 
 
+def optClicked1():
+   text = getText("Get User Info ..." , "Enter Customers Username")
+   if(u.checkExistance(text)):
+      u.sellDevices(text,window.sender().accessibleName())
+   updateGUI()
+
+
+
+def optClicked2():
+   text = getText("Register New Users ..." , "Enter Registration Username")
+   if(u.checkExistance(text)):
+      message("user already exists")
+   else:
+      getUserData = GetUserData
+      getUserData.showPanel(getUserData)
+
+
+
+   updateGUI()
+
+
+
+def optClicked3():
+   text = getText("Get Sensors by Type ..." , "Enter Sensor Type")
+   if(u.checkExistance(text)):
+      u.sellDevices(text,window.sender().accessibleName())
+   updateGUI()
+
+
+
+def optClicked4():
+   text = getText("Get Sensors by Username ..." , "Enter Username")
+   if(u.checkExistance(text)):
+      print("opt4")
+   else:
+      message("username doesnt exist")
+   updateGUI()
+
+
+
+
+
+
+opt1.clicked.connect(optClicked1)
+opt2.clicked.connect(optClicked2)
+opt3.clicked.connect(optClicked3)
+opt4.clicked.connect(optClicked4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -240,6 +301,95 @@ def getText(headerBar , textBar):
 
    if ok:
       return text
+
+
+
+def message(text):
+   msg = QMessageBox(window)
+   msg.setText(text)
+   msg.setWindowTitle("something went wrong")
+   msg.show()
+
+
+
+
+
+
+
+
+class GetUserData():
+
+   data = ""
+   panel = QWidget()
+   panel.setWindowTitle("Registration")
+   panel.setFixedSize(250,250)
+   label1 = QLabel(panel)
+   label2 = QLabel(panel)
+   label3 = QLabel(panel)
+   label4 = QLabel(panel)
+   label1.setText("username")
+   label1.move(20,25)
+   label2.setText("Name")
+   label2.move(20,75)
+   label3.setText("Family")
+   label3.move(20,125)
+   label4.setText("Password")
+   label4.move(20,175)
+
+   textField1 = QLineEdit(panel)
+   textField2 = QLineEdit(panel)
+   textField3 = QLineEdit(panel)
+   textField4 = QLineEdit(panel)
+
+   textField1.move(100 , 25)
+   textField2.move(100 , 75)
+   textField3.move(100 , 125)
+   textField4.move(100 , 175)
+
+
+   button1 = QPushButton("OK" , panel)
+   button1.move(60,210)
+   button1.setFixedSize(50 , 20)
+   button2 = QPushButton("Cancel" , panel)
+   button2.move(140,210)
+   button2.setFixedSize(50 , 20)
+
+
+   def option1(self):
+      GetUserData.panel.hide()
+      u.insert("User" , (GetUserData.textField1.text() , GetUserData.textField2.text() , GetUserData.textField3.text() , GetUserData.textField4.text() , "0"))
+
+
+   def option2(self):
+      GetUserData.panel.hide()
+      print(GetUserData.data)
+
+   button1.clicked.connect( option1 )
+   button2.clicked.connect( option2 )
+
+
+
+
+
+
+   def showPanel(self):
+      self.panel.show()
+
+   def getUserName(self):
+        return 1
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
