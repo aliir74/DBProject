@@ -215,7 +215,9 @@ set4.clicked.connect(buttonClicked3)
 def optClicked1():
    text = getText("Get User Info ..." , "Enter Customers Username")
    if(u.checkExistance(text)):
-      u.sellDevices(text,window.sender().accessibleName())
+      message(text + " totaly paid : " + str(u.getAccount(text)))
+   else:
+      message("user doesnt exist")
    updateGUI()
 
 
@@ -227,9 +229,6 @@ def optClicked2():
    else:
       getUserData = GetUserData
       getUserData.showPanel(getUserData)
-
-
-
    updateGUI()
 
 
