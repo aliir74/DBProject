@@ -67,6 +67,20 @@ class Updator :
 
 
 
+    def checkExistance(self,username):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT username FROM User WHERE username= %s""" , (username,))
+        userTuple = (self.cursor.fetchall())
+        self.cursor.close()
+        self.cnx.close()
+        if userTuple == username :
+            return (1)
+        else :
+            return(0)
+
+
+
 
 
 

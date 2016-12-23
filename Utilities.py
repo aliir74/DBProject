@@ -26,7 +26,7 @@ def getFormattedDate():
 class getInformation():
     user = "testuser"
     password = "test123test!"
-    DB_NAME = "Test30"
+    DB_NAME = "Test50"
     PORT = "3306"
     host = "localhost"
 

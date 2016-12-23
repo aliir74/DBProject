@@ -1,6 +1,6 @@
 import sys
 import time
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication , QLabel , QWidget
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication , QLabel , QWidget , QInputDialog
 import MainUpdator
 from Utilities import getInformation as info
 
@@ -14,6 +14,7 @@ u = MainUpdator.Updator()
 
 
 app = QApplication(sys.argv)
+getInput = QInputDialog
 window = QMainWindow()
 window.setFixedSize(600,600)
 window.setWindowTitle('IOT Shop')
@@ -68,21 +69,130 @@ dec4.setAccessibleName("LightSensor")
 add4.setFixedSize(15,15)
 dec4.setFixedSize(15,15)
 
-def buttonClicked():
+
+
+set1 = QPushButton("Set", window)
+set1.move(250, 25)
+set1.setAccessibleName("GasSensor")
+set1.setFixedSize(30,20)
+set2 = QPushButton("Set", window)
+set2.move(250, 45)
+set2.setAccessibleName("TempSensor")
+set2.setFixedSize(30,20)
+set3 = QPushButton("Set", window)
+set3.move(250, 65)
+set3.setAccessibleName("HumiditySensor")
+set3.setFixedSize(30,20)
+set4 = QPushButton("Set", window)
+set4.move(250, 85)
+set4.setAccessibleName("LightSensor")
+set4.setFixedSize(30,20)
+
+
+sell1 = QPushButton("Sell", window)
+sell1.move(300, 25)
+sell1.setAccessibleName("GasSensor")
+sell1.setFixedSize(30,20)
+sell2 = QPushButton("Sell", window)
+sell2.move(300, 45)
+sell2.setAccessibleName("TempSensor")
+sell2.setFixedSize(30,20)
+sell3 = QPushButton("Sell", window)
+sell3.move(300, 65)
+sell3.setAccessibleName("HumiditySensor")
+sell3.setFixedSize(30,20)
+sell4 = QPushButton("Sell", window)
+sell4.move(300, 85)
+sell4.setAccessibleName("LightSensor")
+sell4.setFixedSize(30,20)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def buttonClicked1():
    if(window.sender().text()=="+"):
       u.incStock(window.sender().accessibleName())
    elif(window.sender().text()=="-"):
       u.decStock(window.sender().accessibleName())
    updateGUI()
 
-add1.clicked.connect(buttonClicked)
-dec1.clicked.connect(buttonClicked)
-add2.clicked.connect(buttonClicked)
-dec2.clicked.connect(buttonClicked)
-add3.clicked.connect(buttonClicked)
-dec3.clicked.connect(buttonClicked)
-add4.clicked.connect(buttonClicked)
-dec4.clicked.connect(buttonClicked)
+
+
+add1.clicked.connect(buttonClicked1)
+dec1.clicked.connect(buttonClicked1)
+add2.clicked.connect(buttonClicked1)
+dec2.clicked.connect(buttonClicked1)
+add3.clicked.connect(buttonClicked1)
+dec3.clicked.connect(buttonClicked1)
+add4.clicked.connect(buttonClicked1)
+dec4.clicked.connect(buttonClicked1)
+
+
+
+
+def buttonClicked2():
+   text = getText("Selling ..." , "Enter Customers Username")
+   if(u.checkExistance(text)):
+      u.sellDevices(text,window.sender().accessibleName())
+   updateGUI()
+
+
+
+sell1.clicked.connect(buttonClicked2)
+sell2.clicked.connect(buttonClicked2)
+sell3.clicked.connect(buttonClicked2)
+sell4.clicked.connect(buttonClicked2)
+
+
+
+
+def buttonClicked3():
+   text = getText("set Stock ..." , "Enter Stock Value")
+   print(int(text))
+   if((text) and int(text)>0):
+      u.setStock(window.sender().accessibleName(),int(text))
+   updateGUI()
+
+
+
+set1.clicked.connect(buttonClicked3)
+set2.clicked.connect(buttonClicked3)
+set3.clicked.connect(buttonClicked3)
+set4.clicked.connect(buttonClicked3)
+
+
 
 
 
@@ -92,6 +202,24 @@ def updateGUI():
    label2.setText(("Temperature Sensors : %s" % (u.getStock("TempSensor"),)))
    label3.setText(("Humidity Sensors : %s" % (u.getStock("HumiditySensor"),)))
    label4.setText(("Light Sensors : %s" %  (u.getStock("LightSensor"),)))
+
+
+
+
+
+
+def getText(headerBar , textBar):
+   text, ok = QInputDialog.getText(window, headerBar, textBar)
+
+   if ok:
+      print(text)
+      return text
+
+
+
+
+
+
 
 
 
