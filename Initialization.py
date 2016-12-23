@@ -15,6 +15,14 @@ def create(DB_NAME , PORT) :
 
 
     def create_database(cursor):
+        print("test create database")
+        try:
+            cursor.execute(
+                "DROP DATABASE {}".format(DB_NAME)
+            )
+            print("DROP DATABASE {}".format(DB_NAME))
+        except mysql.connector.Error as err:
+            pass
         try:
             cursor.execute(
                 "CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(DB_NAME))
@@ -22,6 +30,9 @@ def create(DB_NAME , PORT) :
             print("Failed creating database: {}".format(err))
             exit(1)
 
+    create_database(cursor)
+    cnx.database = DB_NAME
+    '''
     try:
         cnx.database = DB_NAME
     except mysql.connector.Error as err:
@@ -31,7 +42,7 @@ def create(DB_NAME , PORT) :
         else:
             print(err)
             exit(1)
-
+    '''
 
 
 
