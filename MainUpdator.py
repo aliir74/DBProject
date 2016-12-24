@@ -304,7 +304,6 @@ class Updator :
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
         self.cursor.execute("""SELECT username FROM %s WHERE productID= %s""" , (product,productID))
-        print(product , productID)
         userTuple = (self.cursor.fetchall())
         self.cursor.close()
         self.cnx.close()
@@ -317,6 +316,19 @@ class Updator :
             return (0)
 
 
+    def getByQuery(self , text):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute(text)
 
-
+        if("select" in text):
+            resultTuple = (self.cursor.fetchall())
+            self.cursor.close()
+            self.cnx.close()
+            return (True, resultTuple)
+        else:
+            self.cnx.commit()
+            self.cursor.close()
+            self.cnx.close()
+            return (False, ("insertion successful"))
 

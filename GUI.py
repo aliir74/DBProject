@@ -126,10 +126,13 @@ opt4.move(170, 135)
 opt4.setAccessibleName("opt4")
 opt4.setFixedSize(175,45)
 opt5 = QPushButton("SetSensorData", window)
-opt5.move(5, 180)
+opt5.move(5, 170)
 opt5.setAccessibleName("opt5")
-opt5.setFixedSize(340,45)
-
+opt5.setFixedSize(175,45)
+opt6 = QPushButton("Get By Query", window)
+opt6.move(170, 170)
+opt6.setAccessibleName("opt5")
+opt6.setFixedSize(175,45)
 
 
 
@@ -301,6 +304,19 @@ def optClicked5():
 
 
 
+def optClicked6():
+   text = getText("get By Query ..." , "Enter Query")
+   t1, tmp  = u.getByQuery(text)
+   textPanel = TextPanel
+   textPanel.panel.clear()
+   if(t1):
+      for i in range(len(tmp)):
+         print(tmp[i])
+         textPanel.panel.append(str(tmp[i]))
+   else:
+      textPanel.panel.append("insertion successful!")
+   textPanel.showPanel(textPanel)
+
 
 
 
@@ -309,13 +325,18 @@ opt2.clicked.connect(optClicked2)
 opt3.clicked.connect(optClicked3)
 opt4.clicked.connect(optClicked4)
 opt5.clicked.connect(optClicked5)
+opt6.clicked.connect(optClicked6)
 
 
 
 
 
 
-def optClicked6():
+
+
+
+
+def optClicked7():
    text = getText("update Price" , "Enter new price for this item : ")
    u.setPrice(window.sender().accessibleName(),text)
 
@@ -324,10 +345,10 @@ def optClicked6():
 
 
 
-setPrice1.clicked.connect(optClicked6)
-setPrice2.clicked.connect(optClicked6)
-setPrice3.clicked.connect(optClicked6)
-setPrice4.clicked.connect(optClicked6)
+setPrice1.clicked.connect(optClicked7)
+setPrice2.clicked.connect(optClicked7)
+setPrice3.clicked.connect(optClicked7)
+setPrice4.clicked.connect(optClicked7)
 
 
 
