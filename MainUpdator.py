@@ -53,6 +53,30 @@ class Updator :
 
 
 
+
+    def updateSensor(self, tableName , productID , data1 , data2 , data3 ):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        if(tableName=="GasSensor"):
+            self.cursor.execute("""UPDATE GasSensor SET CO2 = %s , CO = %s , CH4 = %s WHERE productID= %s""" , (data1 , data2 , data3 , productID) )
+        elif(tableName=="TempSensor"):
+            self.cursor.execute("""UPDATE TempSensor SET temperature = %s WHERE productID= %s""" , (data1 , productID) )
+
+        elif(tableName=="HumiditySensor"):
+            self.cursor.execute("""UPDATE HumiditySensor SET (airHumidity , soilHumidity) = (%s , %s) WHERE productID= %s""" , (data1 , data2 , productID) )
+
+        elif(tableName=="LightSensor"):
+            self.cursor.execute("""UPDATE LightSensor SET (lightSensitivity , bLightSensitivity) = (%s , %s) WHERE productID= %s""" , (data1 , data2 ,  productID) )
+
+        else:
+            print("TableName is unknown!")
+        self.cnx.commit()
+        self.cursor.close()
+        self.cnx.close()
+
+
+
+
     def insertRaw(self, username , product):
         insertionData = ("INSERT INTO " + product +
                    "(username , productCode , time)"

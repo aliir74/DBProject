@@ -15,7 +15,7 @@ u = MainUpdator.Updator()
 
 app = QApplication(sys.argv)
 window = QMainWindow()
-window.setFixedSize(350,180)
+window.setFixedSize(350,240)
 window.setWindowTitle('IOT Shop')
 
 label1 = QLabel(window)
@@ -124,7 +124,10 @@ opt4 = QPushButton("Sensors by Username", window)
 opt4.move(170, 135)
 opt4.setAccessibleName("opt4")
 opt4.setFixedSize(175,45)
-
+opt5 = QPushButton("SetSensorData", window)
+opt5.move(5, 180)
+opt5.setAccessibleName("opt5")
+opt5.setFixedSize(340,45)
 
 
 
@@ -266,6 +269,13 @@ def optClicked4():
 
 
 
+def optClicked5():
+      getSensorData = GetSensorData
+      getSensorData.showPanel(getSensorData)
+
+
+
+
 
 
 
@@ -273,14 +283,14 @@ opt1.clicked.connect(optClicked1)
 opt2.clicked.connect(optClicked2)
 opt3.clicked.connect(optClicked3)
 opt4.clicked.connect(optClicked4)
+opt5.clicked.connect(optClicked5)
 
 
 
 
 
 
-
-def optClicked5():
+def optClicked6():
    text = getText("update Price" , "Enter new price for this item : ")
    u.setPrice(window.sender().accessibleName(),text)
 
@@ -289,10 +299,10 @@ def optClicked5():
 
 
 
-setPrice1.clicked.connect(optClicked5)
-setPrice2.clicked.connect(optClicked5)
-setPrice3.clicked.connect(optClicked5)
-setPrice4.clicked.connect(optClicked5)
+setPrice1.clicked.connect(optClicked6)
+setPrice2.clicked.connect(optClicked6)
+setPrice3.clicked.connect(optClicked6)
+setPrice4.clicked.connect(optClicked6)
 
 
 
@@ -411,6 +421,70 @@ class GetUserData():
 
 
 
+class GetSensorData():
+
+   data = ""
+   panel = QWidget()
+   panel.setWindowTitle("Registration")
+   panel.setFixedSize(250,280)
+   label1 = QLabel(panel)
+   label2 = QLabel(panel)
+   label3 = QLabel(panel)
+   label4 = QLabel(panel)
+   label5 = QLabel(panel)
+   label1.setText("Sensor Type")
+   label1.move(20,25)
+   label2.setText("Sensor ID")
+   label2.move(20,75)
+   label3.setText("Data1")
+   label3.move(20,125)
+   label4.setText("Data2")
+   label4.move(20,175)
+   label5.setText("Data3")
+   label5.move(20,225)
+
+   textField1 = QLineEdit(panel)
+   textField2 = QLineEdit(panel)
+   textField3 = QLineEdit(panel)
+   textField4 = QLineEdit(panel)
+   textField5 = QLineEdit(panel)
+
+   textField1.move(100 , 25)
+   textField2.move(100 , 75)
+   textField3.move(100 , 125)
+   textField4.move(100 , 175)
+   textField5.move(100 , 225)
+
+
+   button1 = QPushButton("OK" , panel)
+   button1.move(60,250)
+   button1.setFixedSize(50 , 20)
+   button2 = QPushButton("Cancel" , panel)
+   button2.move(140,250)
+   button2.setFixedSize(50 , 20)
+
+
+   def option1(self):
+      GetSensorData.panel.hide()
+      u.updateSensor(GetSensorData.textField1.text(),GetSensorData.textField2.text(),GetSensorData.textField3.text(),GetSensorData.textField4.text(),GetSensorData.textField5.text())
+
+   def option2(self):
+      GetSensorData.panel.hide()
+
+
+   button1.clicked.connect( option1 )
+   button2.clicked.connect( option2 )
+
+
+
+
+
+
+   def showPanel(self):
+      self.panel.show()
+
+   def getUserName(self):
+        return 1
 
 
 
