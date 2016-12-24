@@ -1,7 +1,8 @@
 import sys
 import time
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication , QLabel , QWidget , QInputDialog , QMessageBox , QLineEdit
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication , QLabel , QWidget , QInputDialog , QMessageBox , QLineEdit , QTextEdit
 import MainUpdator
+import Utilities
 from Utilities import getInformation as info
 
 
@@ -251,18 +252,42 @@ def optClicked2():
 
 
 
+
 def optClicked3():
    text = getText("Get Sensors by Type ..." , "Enter Sensor Type")
-   if(u.checkExistance(text)):
-      u.sellDevices(text,window.sender().accessibleName())
-   updateGUI()
+   textPanel = TextPanel
+   textPanel.panel.clear()
+   if(text == "GasSensor") :
+      for i in u.getAllGasSensors():
+         textPanel.panel.append(Utilities.sensorFormattedData(i,text))
+   elif(text == "TempSensor") :
+      for i in u.getAllTempSensors():
+         textPanel.panel.append(Utilities.sensorFormattedData(i,text))
+   elif(text == "HumiditySensor") :
+      for i in u.getAllHumiditySensors():
+         textPanel.panel.append(Utilities.sensorFormattedData(i,text))
+   elif(text == "LightSensor")   :
+      for i in u.getAllLightSensors():
+         textPanel.panel.append(Utilities.sensorFormattedData(i,text))
+   textPanel.showPanel(textPanel)
+
 
 
 
 def optClicked4():
    text = getText("Get Sensors by Username ..." , "Enter Username")
    if(u.checkExistance(text)):
-      print("opt4")
+      textPanel = TextPanel
+      textPanel.panel.clear()
+      for i in u.getGasSensors(text):
+         textPanel.panel.append(Utilities.sensorFormattedData(i,"GasSensor"))
+      for i in u.getTempSensors(text):
+         textPanel.panel.append(Utilities.sensorFormattedData(i,"TempSensor"))
+      for i in u.getHumiditySensors(text):
+         textPanel.panel.append(Utilities.sensorFormattedData(i,"HumiditySensor"))
+      for i in u.getLightSensors(text):
+         textPanel.panel.append(Utilities.sensorFormattedData(i,"LightSensor"))
+      textPanel.showPanel(textPanel)
    else:
       message("username doesnt exist")
    updateGUI()
@@ -344,7 +369,6 @@ def message(text):
    msg.setText(text)
    msg.setWindowTitle("something went wrong")
    msg.show()
-
 
 
 
@@ -485,6 +509,42 @@ class GetSensorData():
 
    def getUserName(self):
         return 1
+
+
+
+
+
+
+class TextPanel():
+
+   data = ""
+   panel = QTextEdit()
+
+
+
+
+
+
+
+
+
+
+   def showPanel(self):
+      self.panel.show()
+
+   def getUserName(self):
+        return 1
+
+
+
+
+
+
+
+
+
+
+
 
 
 

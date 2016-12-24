@@ -66,7 +66,7 @@ class Updator :
             self.cursor.execute("""UPDATE HumiditySensor SET (airHumidity , soilHumidity) = (%s , %s) WHERE productID= %s""" , (data1 , data2 , productID) )
 
         elif(tableName=="LightSensor"):
-            self.cursor.execute("""UPDATE LightSensor SET (lightSensitivity , bLightSensitivity) = (%s , %s) WHERE productID= %s""" , (data1 , data2 ,  productID) )
+            self.cursor.execute("""UPDATE LightSensor SET (lightIntensity , bLightIntensity) = (%s , %s) WHERE productID= %s""" , (data1 , data2 ,  productID) )
 
         else:
             print("TableName is unknown!")
@@ -146,21 +146,73 @@ class Updator :
         self.cnx.close()
 
 
-    def getDevices(self,username):
+    def getGasSensors(self,username):
         self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
         self.cursor = self.cnx.cursor()
-        self.cursor.execute("""SELECT * FROM GasSensor WHERE username=%s""" ,(username,))
+        self.cursor.execute("""SELECT * FROM GasSensor WHERE username=%s and CO2 is not null and CO is not null and CH4 is not null""" ,(username,))
         gasSensors = (self.cursor.fetchall())
-        self.cursor.execute("""SELECT * FROM TempSensor WHERE username=%s""" ,(username,))
+        self.cursor.close()
+        self.cnx.close()
+        return (gasSensors)
+    def getTempSensors(self,username):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT * FROM TempSensor WHERE username=%s and temperature is not null""" ,(username,))
         tempSensors = (self.cursor.fetchall())
-        self.cursor.execute("""SELECT * FROM HumiditySensor WHERE username=%s""" ,(username,))
+        self.cursor.close()
+        self.cnx.close()
+        return (tempSensors)
+    def getHumiditySensors(self,username):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT * FROM HumiditySensor WHERE username=%s and airHumidity is not null and soilHumidity is not null""" ,(username,))
         humiditySensors = (self.cursor.fetchall())
-        self.cursor.execute("""SELECT * FROM LightSensor WHERE username=%s""" ,(username,))
+        self.cursor.close()
+        self.cnx.close()
+        return (humiditySensors)
+    def getLightSensors(self,username):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT * FROM LightSensor WHERE username=%s and lightIntensity is not null and bLightIntensity is not null""" ,(username,))
         lightSensors = (self.cursor.fetchall())
         self.cursor.close()
         self.cnx.close()
-        devices = [gasSensors,tempSensors,humiditySensors,lightSensors]
-        return (devices)
+        return (lightSensors)
+
+
+    def getAllGasSensors(self):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT * FROM GasSensor""")
+        gasSensors = (self.cursor.fetchall())
+        self.cursor.close()
+        self.cnx.close()
+        return (gasSensors)
+    def getAllTempSensors(self):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT * FROM TempSensor""")
+        tempSensors = (self.cursor.fetchall())
+        self.cursor.close()
+        self.cnx.close()
+        return (tempSensors)
+    def getAllHumiditySensors(self):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT * FROM HumiditySensor""")
+        humiditySensors = (self.cursor.fetchall())
+        self.cursor.close()
+        self.cnx.close()
+        return (humiditySensors)
+    def getAllLightSensors(self):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT * FROM LightSensor""")
+        lightSensors = (self.cursor.fetchall())
+        self.cursor.close()
+        self.cnx.close()
+        return (lightSensors)
+
 
 
 
