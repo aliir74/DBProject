@@ -233,3 +233,38 @@ class Updator :
         self.cnx.commit()
         self.cursor.close()
         self.cnx.close()
+
+
+    def checkUsername(self,username,password):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT password FROM User WHERE username= %s""" , (username,))
+        accountTuple = (self.cursor.fetchall()[0])
+        self.cursor.close()
+        self.cnx.close()
+        if password == accountTuple[0]:
+            return (1)
+        else:
+            return (0)
+
+
+    def checkOwnership(self,product , productID , username):
+        self.cnx = mysql.connector.connect(user=self.username , password=self.password , host=self.host , database=self.DB_NAME , port=self.PORT  )
+        self.cursor = self.cnx.cursor()
+        self.cursor.execute("""SELECT username FROM %s WHERE productID= %s""" , (product,productID))
+        print(product , productID)
+        userTuple = (self.cursor.fetchall())
+        self.cursor.close()
+        self.cnx.close()
+        if(userTuple):
+            if(username in userTuple):
+                return (1)
+            else:
+                return (0)
+        else:
+            return (0)
+
+
+
+
+

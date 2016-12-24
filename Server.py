@@ -1,4 +1,7 @@
 import _thread
+import MainUpdator
+
+u = MainUpdator.Updator()
 
 def server( threadName ):
     from flask import Flask
@@ -18,6 +21,7 @@ def server( threadName ):
         username = request.args.get('username')
         password = request.args.get('password')
         option = request.args.get('option')
+        productID = request.args.get('productID')
         if(option == 'view'):
             pass
         elif(option == 'edit'):
@@ -25,7 +29,12 @@ def server( threadName ):
             data = []
             for i in range(3):
                 data.append(int(request.args.get('data'+str(i+1))))
-        print(username, password, option, sensorType, data)
+        if(u.checkExistance(username)):
+            if(u.checkUsername(username,password)):
+                #if(u.checkOwnership(sensorType,productID,username)):
+                    u.updateSensor(sensorType,productID,data[0] , data[1] , data[2])
+
+
         return "khar"
 
     #if __name__ == "__main__":
